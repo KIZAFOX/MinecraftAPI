@@ -2,7 +2,6 @@ package fr.kiza.minecraftapi.core;
 
 import fr.kiza.minecraftapi.handler.listener.EventListener;
 import fr.kiza.minecraftapi.handler.listener.event.EventDispatcher;
-import fr.kiza.minecraftapi.handler.packets.handler.PacketHandler;
 import fr.kiza.minecraftapi.handler.player.handler.PlayerHandler;
 import fr.kiza.minecraftapi.handler.tools.ConsoleColor;
 import org.bukkit.entity.Player;
@@ -18,7 +17,6 @@ public abstract class Core {
     public Logger logger;
 
     private PlayerHandler playerHandler;
-    private PacketHandler packetHandler;
 
     private EventDispatcher eventDispatcher;
 
@@ -40,19 +38,15 @@ public abstract class Core {
         logger.info(ConsoleColor.GREEN + PREFIX + "Starting to load MinecraftAPI... by @KIZA" + ConsoleColor.RESET);
         logger.info(ConsoleColor.CYAN + "=========================" + ConsoleColor.RESET);
 
-        logger.info(ConsoleColor.YELLOW + "[1/4] Loading PlayerHandler... " + ConsoleColor.RESET);
+        logger.info(ConsoleColor.YELLOW + "[1/3] Loading PlayerHandler... " + ConsoleColor.RESET);
         this.playerHandler = new PlayerHandler();
         logger.info(ConsoleColor.GREEN + "[✓] PlayerHandler loaded successfully!" + ConsoleColor.RESET);
 
-        logger.info(ConsoleColor.YELLOW + "[2/4] Loading PacketHandler... " + ConsoleColor.RESET);
-        this.packetHandler = new PacketHandler();
-        logger.info(ConsoleColor.GREEN + "[✓] PacketHandler loaded successfully!" + ConsoleColor.RESET);
-
-        logger.info(ConsoleColor.YELLOW + "[3/4] Loading EventDispatcher... " + ConsoleColor.RESET);
+        logger.info(ConsoleColor.YELLOW + "[2/3] Loading EventDispatcher... " + ConsoleColor.RESET);
         this.eventDispatcher = new EventDispatcher(this.plugin);
         logger.info(ConsoleColor.GREEN + "[✓] EventDispatcher loaded successfully!" + ConsoleColor.RESET);
 
-        logger.info(ConsoleColor.YELLOW + "[4/4] Registering Event Listeners... " + ConsoleColor.RESET);
+        logger.info(ConsoleColor.YELLOW + "[3/3] Registering Event Listeners... " + ConsoleColor.RESET);
         this.plugin.getServer().getPluginManager().registerEvents(new EventListener(), plugin);
         logger.info(ConsoleColor.GREEN + "[✓] Listeners registered successfully!" + ConsoleColor.RESET);
 
@@ -83,10 +77,6 @@ public abstract class Core {
 
     public PlayerHandler getPlayerHandler() {
         return playerHandler;
-    }
-
-    public PacketHandler getPacketHandler() {
-        return packetHandler;
     }
 
     public EventDispatcher getEventDispatcher() {
