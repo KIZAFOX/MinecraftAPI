@@ -1,0 +1,8 @@
+name: MinecraftAPI
+version: '1.0-SNAPSHOT'
+main: fr.kiza.test.minecraftapi.MinecraftAPITest
+api-version: '1.21'
+load: STARTUP
+authors: [ KIZA ]
+description: API for Minecraft plugins
+website: https://kiwi-solutions.fr
