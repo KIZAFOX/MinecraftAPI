@@ -2,7 +2,7 @@ package fr.kiza.minecraftapi.plugin;
 
 import fr.kiza.minecraftapi.core.Core;
 import fr.kiza.minecraftapi.handler.packets.PacketFactory;
-import fr.kiza.minecraftapi.handler.packets.handler.types.MessagePacketHandler;
+import fr.kiza.minecraftapi.handler.packets.PacketType;
 import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
 import fr.kiza.minecraftapi.handler.player.PlayerListener;
 import fr.kiza.minecraftapi.handler.tools.Logger;
@@ -31,7 +31,7 @@ public final class MinecraftAPITest extends JavaPlugin implements Listener {
     @PlayerListener(PlayerJoinEvent.class)
     public void onLogin(final PlayerJoinEvent event){
         Core.getInstance().getPlayerHandler().performAction(((player) -> {
-            PacketSender.sendPacket(PacketFactory.getBuilder(MessagePacketHandler.PACKET_ID)
+            PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.MESSAGE_PLAYER)
                     .message(ChatColor.YELLOW + "Welcome to my server " + ChatColor.AQUA + player.getName() + ChatColor.YELLOW + "!")
                     .build());
         }), event);
