@@ -45,4 +45,14 @@ public class EventDispatcher implements Listener {
                 plugin
         );
     }
+
+    public void registerEvent(final Plugin plugin){
+        Arrays.stream(handler.getClass().getDeclaredMethods())
+                .filter(method -> method.isAnnotationPresent(PlayerListener.class))
+                .forEach(methods -> {
+                    final Class<? extends Event> eventClass = methods.getAnnotation(PlayerListener.class).value();
+                    this.registerEvent(eventClass, plugin);
+                });
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
 }
