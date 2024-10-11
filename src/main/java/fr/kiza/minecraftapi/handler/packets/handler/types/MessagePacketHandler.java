@@ -6,8 +6,6 @@ import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
 
 public class MessagePacketHandler implements PacketBuilder<ClientboundSystemChatPacket> {
 
-    public static final String PACKET_ID = "chat";
-
     private String message;
 
     @Override
