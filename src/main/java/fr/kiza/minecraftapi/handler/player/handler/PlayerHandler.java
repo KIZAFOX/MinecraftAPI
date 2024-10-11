@@ -1,7 +1,6 @@
 package fr.kiza.minecraftapi.handler.player.handler;
 
 import fr.kiza.minecraftapi.core.Core;
-import fr.kiza.minecraftapi.handler.packets.handler.PacketHandler;
 import fr.kiza.minecraftapi.handler.player.PlayerAction;
 import fr.kiza.minecraftapi.handler.player.PlayerListener;
 import fr.kiza.minecraftapi.handler.player.data.PlayerData;
@@ -28,9 +27,8 @@ public class PlayerHandler {
 
             if(callingMethod.isAnnotationPresent(PlayerListener.class)){
                 final Optional<Player> optionalPlayer = Optional.ofNullable(Core.getInstance().getPlayer());
-                final PacketHandler packetHandler = Core.getInstance().getPacketHandler();
 
-                optionalPlayer.ifPresent(player -> action.execute(player, packetHandler));
+                optionalPlayer.ifPresent(action::execute);
             }else{
                 Logger.print("The method " + callingMethodName + " does not have the @PlayerInteraction annotation.", Logger.LoggerLevel.ERROR);
 
