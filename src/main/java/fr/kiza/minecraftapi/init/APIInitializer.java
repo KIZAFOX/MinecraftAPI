@@ -18,8 +18,7 @@ public class APIInitializer {
             Arrays.stream(plugin.getClass().getDeclaredMethods())
                     .filter(methods -> methods.isAnnotationPresent(PlayerListener.class))
                     .forEach(methods -> {
-                        final Class<? extends Event> eventClass = methods.getAnnotation(PlayerListener.class).value();
-                        Core.getInstance().getEventDispatcher().registerEvent(eventClass, plugin);
+                        Core.getInstance().getEventDispatcher().registerEvent(plugin);
                         plugin.getServer().getPluginManager().registerEvents(Core.getInstance().getEventDispatcher(), plugin);
                     });
 
