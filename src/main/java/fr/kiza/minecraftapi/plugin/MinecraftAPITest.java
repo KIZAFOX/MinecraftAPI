@@ -33,7 +33,17 @@ public final class MinecraftAPITest extends JavaPlugin implements Listener {
         Core.getInstance().getPlayerHandler().performAction(((player) -> {
             PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.MESSAGE_PLAYER)
                     .message(ChatColor.YELLOW + "Welcome to my server " + ChatColor.AQUA + player.getName() + ChatColor.YELLOW + "!")
-                    .build());
+                    .build()
+            );
+
+            PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.TITLE)
+                    .title(ChatColor.BLUE + "|| " + ChatColor.AQUA + player.getName() + ChatColor.BLUE + " ||")
+                    .subTitle(ChatColor.GRAY + "" + ChatColor.ITALIC + "Welcome to my server...")
+                    .fadeIn(20)
+                    .stay(30)
+                    .fadeOut(20)
+                    .build()
+            );
         }), event);
     }
 }
