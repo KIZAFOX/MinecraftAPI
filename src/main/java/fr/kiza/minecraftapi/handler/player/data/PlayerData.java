@@ -20,10 +20,8 @@ public record PlayerData(Player player) {
     }
 
     public void remove() {
-        if(ErrorException.isValidPlayer(player).isPresent()){
-            PLAYERS.remove(player);
-            instance.logger.info(player.getName() + " successfully removed from the core.");
-        }
+        PLAYERS.remove(player);
+        instance.logger.info(player.getName() + " successfully removed from the core.");
     }
 
     public Player getPlayer() {
