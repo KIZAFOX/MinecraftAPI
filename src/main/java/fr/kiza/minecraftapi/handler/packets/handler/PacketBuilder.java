@@ -4,8 +4,6 @@ import net.minecraft.network.protocol.Packet;
 
 public interface PacketBuilder<T> {
 
-    Packet<?> build();
-
     default PacketBuilder<T> message(String message){
         return this;
     }
@@ -29,4 +27,7 @@ public interface PacketBuilder<T> {
     default PacketBuilder<T> fadeOut(int fadeOut){
         return this;
     }
+
+    Packet<?> build();
+
 }
