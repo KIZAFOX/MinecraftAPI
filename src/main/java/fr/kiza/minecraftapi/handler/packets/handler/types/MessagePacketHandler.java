@@ -16,7 +16,6 @@ public class MessagePacketHandler implements PacketBuilder<ClientboundSystemChat
 
     @Override
     public ClientboundSystemChatPacket build() {
-        IChatBaseComponent component = IChatBaseComponent.a(this.message);
-        return new ClientboundSystemChatPacket(component, false);
+        return new ClientboundSystemChatPacket(IChatBaseComponent.a(this.message), false);
     }
 }
