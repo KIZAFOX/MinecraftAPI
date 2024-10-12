@@ -6,7 +6,7 @@ import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
 
 public class MessagePacketHandler implements PacketBuilder<ClientboundSystemChatPacket> {
 
-    private String message;
+    protected String message;
 
     @Override
     public PacketBuilder<ClientboundSystemChatPacket> message(String message) {
