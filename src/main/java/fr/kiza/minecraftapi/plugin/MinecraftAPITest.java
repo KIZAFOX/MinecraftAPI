@@ -44,6 +44,10 @@ public final class MinecraftAPITest extends JavaPlugin implements Listener {
                     .fadeOut(20)
                     .build()
             );
+
+            PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.ACTION_BAR)
+                    .message(ChatColor.LIGHT_PURPLE + "Hello, " + ChatColor.BOLD + player.getName())
+                    .build());
         }), event);
     }
 }
