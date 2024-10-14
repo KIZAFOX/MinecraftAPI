@@ -17,14 +17,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 @MinecraftAPI
 public final class MinecraftAPITest extends JavaPlugin implements Listener {
 
-    private CommandManager commandManager;
-
     @Override
     public void onEnable() {
         APIInitializer.init(this);
 
-        this.commandManager = new CommandManager();
-        this.commandManager.registerCommands("fr.kiza.minecraftapi.plugin.command");
+        new CommandManager().registerCommands("fr.kiza.minecraftapi.plugin.command");
 
         Logger.print("THIS IS A @DEBUG MESSAGE FROM LOGGER", Logger.LoggerLevel.DEBUG);
         Logger.print("THIS IS AN @INFO MESSAGE FROM LOGGER", Logger.LoggerLevel.INFO);

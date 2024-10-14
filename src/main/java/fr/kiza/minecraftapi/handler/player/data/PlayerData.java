@@ -1,7 +1,6 @@
 package fr.kiza.minecraftapi.handler.player.data;
 
 import fr.kiza.minecraftapi.core.Core;
-import fr.kiza.minecraftapi.handler.exception.ErrorException;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
