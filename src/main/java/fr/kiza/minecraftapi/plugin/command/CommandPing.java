@@ -9,8 +9,6 @@ import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
-
 @CommandRegisterer
 @CommandHandler(
         name="ping",
