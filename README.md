@@ -12,23 +12,24 @@
 - Java Version: [JDK:22](https://www.oracle.com/fr/java/technologies/downloads/)
 - Spigot Version: [1.21.1](https://www.spigotmc.org)
 
----
 
 ## Table of Contents
 
 <!-- TOC -->
-- [Installation](#installation)
-- [Usage](#usage)
-    - [Basic Setup](#basic-setup)
-    - [Event Handling](#event-handling)
-    - [Command Handling](#command-handling)
-- [Code Examples](#code-examples)
-    - [Packets](#packets)
-      - [Message](#message)
-      - [Title](#title)
-      - [Action bar](#actionbar)
-- [Informations](#informations)
-- [License](#license)
+* [MinecraftAPI](#minecraftapi)
+  * [Table of Contents](#table-of-contents)
+  * [Installation](#installation)
+  * [Usage](#usage)
+      * [Basic Setup](#basic-setup)
+    * [Event Handling](#event-handling)
+    * [Command Handling](#command-handling)
+  * [Code Examples](#code-examples)
+    * [Packets](#packets)
+        * [_Message_](#_message_)
+        * [_Title_](#_title_)
+        * [_Action Bar_](#_action-bar_)
+  * [Informations](#informations)
+  * [License](#license)
 <!-- TOC -->
 
 ---
@@ -46,7 +47,7 @@
    mvn clean install
     ```
 
-3. **Import the .jar in your own project**
+3. **Import the .jar into your own project**
 
 ## Usage
 
@@ -54,25 +55,195 @@
 
 ⚠️ Do not forget to add [_@MinecraftAPI_](https://github.com/KIZAFOX/MinecraftAPI/blob/dev/src/main/java/fr/kiza/minecraftapi/init/MinecraftAPI.java) above your class name.
 
-   ```java
-    import fr.kiza.minecraftapi.init.APIInitializer;
-    import fr.kiza.minecraftapi.init.MinecraftAPI;
-    import org.bukkit.plugin.java.JavaPlugin;
+```java
+import fr.kiza.minecraftapi.init.APIInitializer;
+import fr.kiza.minecraftapi.init.MinecraftAPI;
+    
+import org.bukkit.plugin.java.JavaPlugin;
 
-    @MinecraftAPI
-    public final class MyGame extends JavaPlugin {
-        @Override
-        public void onEnable() {
-            APIInitializer.init(this);
-        }
+@MinecraftAPI
+public final class MyGame extends JavaPlugin {
+    @Override
+    public void onEnable() {
+        APIInitializer.init(this);
     }
-   ```
+}
+```
+
+### Event Handling
+
+⚠️ Do not forget to add [_@PlayerListener(YourEvent.class)_](https://github.com/KIZAFOX/MinecraftAPI/blob/dev/src/main/java/fr/kiza/minecraftapi/handler/player/PlayerListener.java) above your event method name.
+
+```java
+import fr.kiza.minecraftapi.handler.player.PlayerListener;
+
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+@PlayerListener(PlayerJoinEvent.class)
+public final class MyListener implements Listener {
+    @PlayerListener(PlayerJoinEvent.class)
+    public void onLogin(final PlayerJoinEvent event) {
+        /*
+         * Your stuff...
+         */
+    }
+}
+```
+
+🚨 With _MinecraftAPI_ you do not need to register the listener/event !
+
+### Command Handling
+
+⚠️ Command Handling is a bit more tricky you have to put two annotations above your class name :
+
+1) [**@CommandRegisterer**](https://github.com/KIZAFOX/MinecraftAPI/blob/dev/src/main/java/fr/kiza/minecraftapi/handler/commands/handler/CommandRegisterer.java)
+2) [**@CommandHandler(_Name, Description, Usage, Aliases_)**](https://github.com/KIZAFOX/MinecraftAPI/blob/dev/src/main/java/fr/kiza/minecraftapi/handler/commands/handler/CommandHandler.java)
+
+🚨 **AND do not forget to initialize your commands path in your onEnable !** 🚨
+
+At first :
+
+```java
+import fr.kiza.minecraftapi.handler.commands.CommandManager;
+import fr.kiza.minecraftapi.init.APIInitializer;
+import fr.kiza.minecraftapi.init.MinecraftAPI;
+    
+import org.bukkit.plugin.java.JavaPlugin;
+    
+@MinecraftAPI
+public final class MyGame extends JavaPlugin { 
+    @Override 
+    public void onEnable() {
+        APIInitializer.init(this);
+            
+        new CommandManager().registerCommands("YOUR.PATH-PACKAGE.TO.COMMANDS");
+    }
+}
+```
+
+And in your command class :
+
+````java
+import fr.kiza.minecraftapi.handler.commands.AbstractCommand;
+import fr.kiza.minecraftapi.handler.commands.handler.CommandRegisterer;
+import fr.kiza.minecraftapi.handler.commands.handler.CommandHandler;
+import fr.kiza.minecraftapi.handler.packets.PacketFactory;
+import fr.kiza.minecraftapi.handler.packets.PacketType;
+import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+
+@CommandRegisterer
+@CommandHandler(
+        name="ping",
+        description = "This is a ping command",
+        usage = "/ping",
+        aliases = {"p", "pong"}
+)
+public class CommandPing extends AbstractCommand {
+    @Override
+    public boolean execute(CommandSender sender, Command command, String label, String[] args) {
+        PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.MESSAGE_PLAYER)
+                .message("Pong!")
+                .build()
+        );
+
+        return false;
+    }
+}
+````
+
+---
+
+## Code Examples
+
+### Packets
+
+|         Packet name          | Version | Type | Status |
+|:----------------------------:|:-------:|:----:|:------:|
+| [MESSAGE_PLAYER](#_message_) |   1.0   |  📩  |   ✅    |
+|      [TITLE](#_title_)       |   1.0   |  📩  |   ✅    |
+| [ACTION_BAR](#_action-bar_)  |   1.0   |  📩  |   ✅    |
+
+
+##### _Message_
+
+```java
+import fr.kiza.minecraftapi.core.Core;
+import fr.kiza.minecraftapi.handler.packets.PacketFactory;
+import fr.kiza.minecraftapi.handler.packets.PacketType;
+import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
+    
+import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
+    
+public class PlayerListener implements Listener { 
+    @PlayerListener(PlayerJoinEvent.class) 
+    public void onLogin(final PlayerJoinEvent event) {
+        Core.getInstance().getPlayerHandler().performAction(((player) -> PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.MESSAGE_PLAYER)
+                .message(ChatColor.YELLOW + "Welcome to my server " + ChatColor.AQUA + player.getName() + ChatColor.YELLOW + "!")
+                .build()
+        )), event);
+    }
+}
+```
+
+##### _Title_
+
+```java
+import fr.kiza.minecraftapi.core.Core;
+import fr.kiza.minecraftapi.handler.packets.PacketFactory;
+import fr.kiza.minecraftapi.handler.packets.PacketType;
+import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
+    
+import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+    
+public class PlayerListener implements Listener {
+    @PlayerListener(PlayerJoinEvent.class)
+    public void onLogin(final PlayerJoinEvent event){
+        Core.getInstance().getPlayerHandler().performAction(((player) -> PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.TITLE)
+                .title(ChatColor.BLUE + "|| " + ChatColor.AQUA + player.getName() + ChatColor.BLUE + " ||")
+                .subTitle(ChatColor.GRAY + "" + ChatColor.ITALIC + "Welcome to my server...")
+                .fadeIn(20)
+                .stay(30)
+                .fadeOut(20)
+                .build()
+        )), event);
+    }
+}
+```
+
+##### _Action Bar_
+
+```java
+import fr.kiza.minecraftapi.core.Core;
+import fr.kiza.minecraftapi.handler.packets.PacketFactory;
+import fr.kiza.minecraftapi.handler.packets.PacketType;
+import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
+    
+import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+    
+public class PlayerListener implements Listener {
+    @PlayerListener(PlayerJoinEvent.class)
+    public void onLogin(final PlayerJoinEvent event){
+        Core.getInstance().getPlayerHandler().performAction(((player) -> PacketSender.sendPacket(PacketFactory.getBuilder(PacketType.ACTION_BAR)
+                .message(ChatColor.LIGHT_PURPLE + "Hello, " + ChatColor.BOLD + player.getName())
+                .build())), event);
+    }
+}
+```
+
 ---
 
 ## Informations
 
 - ↪️ I'm currently working on the documentation. Create an issues in case of a problem.
-- ↪️ Contact me on [twitter](https://twitter.com/KIZAFOX) or [discord](discordapp.com/users/312654382586134529) if you have any questions.
+- ↪️ Contact me on [twitter](https://twitter.com/KIZAFOX) or [discord](https://discordapp.com/users/312654382586134529) if you have any questions.
 
 ## License
 
