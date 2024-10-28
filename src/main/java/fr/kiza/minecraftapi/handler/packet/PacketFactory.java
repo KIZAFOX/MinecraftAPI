@@ -1,9 +1,9 @@
-package fr.kiza.minecraftapi.handler.packets;
+package fr.kiza.minecraftapi.handler.packet;
 
-import fr.kiza.minecraftapi.handler.packets.handler.PacketBuilder;
-import fr.kiza.minecraftapi.handler.packets.handler.types.ActionBarPacketHandler;
-import fr.kiza.minecraftapi.handler.packets.handler.types.MessagePacketHandler;
-import fr.kiza.minecraftapi.handler.packets.handler.types.TitlePacketHandler;
+import fr.kiza.minecraftapi.handler.packet.handler.PacketBuilder;
+import fr.kiza.minecraftapi.handler.packet.handler.types.ActionBarPacketHandler;
+import fr.kiza.minecraftapi.handler.packet.handler.types.MessagePacketHandler;
+import fr.kiza.minecraftapi.handler.packet.handler.types.TitlePacketHandler;
 
 public class PacketFactory {
     public static PacketBuilder<?> getBuilder(PacketType packetType){

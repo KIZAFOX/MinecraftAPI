@@ -1,4 +1,4 @@
-package fr.kiza.minecraftapi.handler.packets.handler;
+package fr.kiza.minecraftapi.handler.packet.handler;
 
 import net.minecraft.network.protocol.Packet;
 

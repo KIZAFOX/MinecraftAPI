@@ -1,7 +1,7 @@
-package fr.kiza.minecraftapi.handler.packets.handler.types;
+package fr.kiza.minecraftapi.handler.packet.handler.types;
 
-import fr.kiza.minecraftapi.handler.packets.handler.PacketBuilder;
-import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
+import fr.kiza.minecraftapi.handler.packet.handler.PacketBuilder;
+import fr.kiza.minecraftapi.handler.packet.sender.PacketSender;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
