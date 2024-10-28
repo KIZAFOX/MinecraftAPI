@@ -1,10 +1,11 @@
 package fr.kiza.minecraftapi.plugin;
 
+import fr.kiza.hikariapi.HikariAPI;
 import fr.kiza.minecraftapi.core.Core;
 import fr.kiza.minecraftapi.handler.commands.CommandManager;
-import fr.kiza.minecraftapi.handler.packets.PacketFactory;
-import fr.kiza.minecraftapi.handler.packets.PacketType;
-import fr.kiza.minecraftapi.handler.packets.sender.PacketSender;
+import fr.kiza.minecraftapi.handler.packet.PacketFactory;
+import fr.kiza.minecraftapi.handler.packet.PacketType;
+import fr.kiza.minecraftapi.handler.packet.sender.PacketSender;
 import fr.kiza.minecraftapi.handler.player.PlayerListener;
 import fr.kiza.minecraftapi.handler.tools.Logger;
 import fr.kiza.minecraftapi.init.APIInitializer;
@@ -29,6 +30,13 @@ public final class MinecraftAPITest extends JavaPlugin implements Listener {
         Logger.print("THIS IS AN @ERROR MESSAGE FROM LOGGER", Logger.LoggerLevel.ERROR);
         Logger.print("THIS IS A @FATAL MESSAGE FROM LOGGER", Logger.LoggerLevel.FATAL);
         Logger.print("THIS IS A @TRACE MESSAGE FROM LOGGER", Logger.LoggerLevel.TRACE);
+
+        HikariAPI.connect("root", "", "localhost", 3306, "teeworlds");
+    }
+
+    @Override
+    public void onDisable() {
+        HikariAPI.disconnect();
     }
 
     @PlayerListener(PlayerJoinEvent.class)
