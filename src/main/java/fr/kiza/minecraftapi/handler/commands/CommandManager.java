@@ -12,6 +12,7 @@ import org.bukkit.plugin.SimplePluginManager;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class CommandManager {
@@ -40,8 +41,13 @@ public class CommandManager {
     private void registerDynamicCommand(final String commandName, final String description, final String usage, final String[] aliases, final String permission, final AbstractCommand executor) {
         BukkitCommand dynamicCommand = new BukkitCommand(commandName) {
             @Override
-            public boolean execute(final CommandSender sender, String label, String[] args) {
+            public boolean execute(final CommandSender sender, final String label, final String[] args) {
                 return executor.execute(sender, this, label, args);
+            }
+
+            @Override
+            public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
+                return executor.tabComplete(sender, this, alias, args);
             }
         };
 
