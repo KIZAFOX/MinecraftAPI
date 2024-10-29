@@ -1,4 +1,4 @@
-package fr.kiza.minecraftapi.module.tools;
+package fr.kiza.minecraftapi.module.tools.color;
 
 public enum ConsoleColor {
     RESET("\u001B[0m"),
