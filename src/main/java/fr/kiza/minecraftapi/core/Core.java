@@ -1,12 +1,15 @@
 package fr.kiza.minecraftapi.core;
 
-import fr.kiza.minecraftapi.handler.listener.EventListener;
-import fr.kiza.minecraftapi.handler.listener.event.EventDispatcher;
-import fr.kiza.minecraftapi.handler.player.handler.PlayerHandler;
-import fr.kiza.minecraftapi.handler.tools.ConsoleColor;
+import fr.kiza.minecraftapi.module.controller.event.EventListener;
+import fr.kiza.minecraftapi.module.controller.event.EventDispatcher;
+import fr.kiza.minecraftapi.module.player.handler.PlayerHandler;
+import fr.kiza.minecraftapi.module.tools.color.ConsoleColor;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.logging.Logger;
 
 public abstract class Core {
@@ -17,12 +20,7 @@ public abstract class Core {
     public Logger logger;
 
     private PlayerHandler playerHandler;
-
     private EventDispatcher eventDispatcher;
-
-    public static final String PREFIX = "[MinecraftAPI] ";
-
-    public Core(){}
 
     public static void init(final JavaPlugin plugin) {
         if(instance == null){
@@ -32,10 +30,10 @@ public abstract class Core {
     }
 
     private void loadAPI(){
-        long startTime = System.currentTimeMillis();
+        final Instant start = Instant.now();
 
         logger.info(ConsoleColor.CYAN + "=========================" + ConsoleColor.RESET);
-        logger.info(ConsoleColor.GREEN + PREFIX + "Starting to load MinecraftAPI... by @KIZA" + ConsoleColor.RESET);
+        logger.info(ConsoleColor.GREEN + "Starting to load MinecraftAPI... by @KIZA" + ConsoleColor.RESET);
         logger.info(ConsoleColor.CYAN + "=========================" + ConsoleColor.RESET);
 
         logger.info(ConsoleColor.YELLOW + "[1/3] Loading PlayerHandler... " + ConsoleColor.RESET);
@@ -50,12 +48,9 @@ public abstract class Core {
         this.plugin.getServer().getPluginManager().registerEvents(new EventListener(), plugin);
         logger.info(ConsoleColor.GREEN + "[✓] Listeners registered successfully!" + ConsoleColor.RESET);
 
-        long endTime = System.currentTimeMillis(); // End time for execution tracking
-        long executionTime = endTime - startTime; // Calculate execution time
-
         logger.info(ConsoleColor.CYAN + "=========================" + ConsoleColor.RESET);
-        logger.info(ConsoleColor.GREEN + PREFIX + "MinecraftAPI successfully loaded!" + ConsoleColor.RESET);
-        logger.info(ConsoleColor.CYAN + "Execution time: " + ConsoleColor.YELLOW + executionTime + "ms" + ConsoleColor.RESET);
+        logger.info(ConsoleColor.GREEN + "MinecraftAPI successfully loaded!" + ConsoleColor.RESET);
+        logger.info(ConsoleColor.CYAN + "Execution time: " + ConsoleColor.YELLOW + Duration.between(start, Instant.now()).toMillis() + "ms" + ConsoleColor.RESET);
         logger.info(ConsoleColor.CYAN + "=========================" + ConsoleColor.RESET);
     }
 
