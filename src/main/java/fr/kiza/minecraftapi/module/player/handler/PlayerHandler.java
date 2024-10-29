@@ -4,7 +4,7 @@ import fr.kiza.minecraftapi.core.Core;
 import fr.kiza.minecraftapi.module.player.PlayerAction;
 import fr.kiza.minecraftapi.module.player.PlayerListener;
 import fr.kiza.minecraftapi.module.player.data.PlayerData;
-import fr.kiza.minecraftapi.module.tools.Logger;
+import fr.kiza.minecraftapi.module.tools.logger.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
