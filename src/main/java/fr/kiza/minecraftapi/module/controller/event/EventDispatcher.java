@@ -1,6 +1,7 @@
 package fr.kiza.minecraftapi.module.controller.event;
 
 import fr.kiza.minecraftapi.module.player.PlayerListener;
+
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -13,7 +14,7 @@ public class EventDispatcher implements Listener {
 
     private final Object handler;
 
-    public EventDispatcher(Object handler) {
+    public EventDispatcher(final Object handler) {
         this.handler = handler;
     }
 
@@ -36,7 +37,7 @@ public class EventDispatcher implements Listener {
         });
     }
 
-    public <T extends Event> void registerEvent(Class<T> eventClass, final Plugin plugin){
+    public <T extends Event> void registerEvent(final Class<T> eventClass, final Plugin plugin){
         plugin.getServer().getPluginManager().registerEvent(
                 eventClass,
                 this,
