@@ -1,4 +1,4 @@
-package fr.kiza.minecraftapi.module.commands.handler;
+package fr.kiza.minecraftapi.module.controller.commands.handler;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

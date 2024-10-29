@@ -1,6 +1,7 @@
-package fr.kiza.minecraftapi.module.tools;
+package fr.kiza.minecraftapi.module.tools.logger;
 
 import fr.kiza.minecraftapi.core.Core;
+import fr.kiza.minecraftapi.module.tools.color.ConsoleColor;
 
 public class Logger {
 

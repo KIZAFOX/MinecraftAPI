@@ -1,4 +1,4 @@
-package fr.kiza.minecraftapi.module.commands;
+package fr.kiza.minecraftapi.module.controller.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package fr.kiza.minecraftapi.module.listener.event;
+package fr.kiza.minecraftapi.module.controller.event;
 
 import fr.kiza.minecraftapi.module.player.PlayerListener;
 import org.bukkit.event.Event;

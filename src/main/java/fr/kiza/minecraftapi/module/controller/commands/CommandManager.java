@@ -1,14 +1,14 @@
-package fr.kiza.minecraftapi.module.commands;
+package fr.kiza.minecraftapi.module.controller.commands;
 
-import fr.kiza.minecraftapi.module.commands.handler.CommandHandler;
-import fr.kiza.minecraftapi.module.commands.handler.CommandRegisterer;
-import fr.kiza.minecraftapi.module.tools.ClassScanner;
-import fr.kiza.minecraftapi.module.tools.Logger;
+import fr.kiza.minecraftapi.module.controller.commands.handler.CommandHandler;
+import fr.kiza.minecraftapi.module.controller.commands.handler.CommandRegisterer;
+import fr.kiza.minecraftapi.module.tools.logger.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.plugin.SimplePluginManager;
+import org.reflections.Reflections;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class CommandManager {
     public void registerCommands(final String packageName) {
-        final Set<Class<?>> classes = ClassScanner.getClasses(packageName);
+        final Set<Class<?>> classes = new Reflections(packageName).getTypesAnnotatedWith(CommandHandler.class);
 
         classes.forEach(clazz -> {
             if (clazz.isAnnotationPresent(CommandHandler.class)) {
