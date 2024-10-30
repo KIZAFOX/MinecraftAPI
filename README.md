@@ -25,7 +25,6 @@
       * [Gradle:](#gradle)
   * [Usage](#usage)
       * [Basic Setup](#basic-setup)
-        * [Note: This API requires a database connection to function properly. Please ensure that you configure a database connection using the HikariAPI, as this API operates in conjunction with HikariCP for optimal database management and performance. Make sure to include the appropriate configuration in your code.](#note-this-api-requires-a-database-connection-to-function-properly-please-ensure-that-you-configure-a-database-connection-using-the-hikariapi-as-this-api-operates-in-conjunction-with-hikaricp-for-optimal-database-management-and-performance-make-sure-to-include-the-appropriate-configuration-in-your-code)
     * [Event Handling](#event-handling)
     * [Command Handling](#command-handling)
   * [Code Examples](#code-examples)
@@ -398,6 +397,11 @@ public class CommandTool extends AbstractCommand {
 }
 
 ```
+
+### Quest
+
+I'll put the entire doc about Quest later.
+For the moment please refer to the test [side](https://github.com/KIZAFOX/MinecraftAPI/blob/dev/src/test/java/fr/kiza/test/minecraftapi/MinecraftAPITest.java).
 
 ---
 
