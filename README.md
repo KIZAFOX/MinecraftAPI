@@ -25,6 +25,7 @@
       * [Gradle:](#gradle)
   * [Usage](#usage)
       * [Basic Setup](#basic-setup)
+        * [Note: This API requires a database connection to function properly. Please ensure that you configure a database connection using the HikariAPI, as this API operates in conjunction with HikariCP for optimal database management and performance. Make sure to include the appropriate configuration in your code.](#note-this-api-requires-a-database-connection-to-function-properly-please-ensure-that-you-configure-a-database-connection-using-the-hikariapi-as-this-api-operates-in-conjunction-with-hikaricp-for-optimal-database-management-and-performance-make-sure-to-include-the-appropriate-configuration-in-your-code)
     * [Event Handling](#event-handling)
     * [Command Handling](#command-handling)
   * [Code Examples](#code-examples)
@@ -112,6 +113,33 @@ public final class MyGame extends JavaPlugin {
         APIInitializer.init(this);
     }
 }
+```
+
+Note: This API requires a database connection to function properly. Please ensure that you configure a database connection using the HikariAPI, as this API operates in conjunction with HikariCP for optimal database management and performance. Make sure to include the appropriate configuration in your code.
+
+Just add the code below:
+
+```java
+import fr.kiza.hikariapi.HikariAPI;
+import fr.kiza.minecraftapi.init.APIInitializer;
+import fr.kiza.minecraftapi.init.MinecraftAPI;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+@MinecraftAPI
+public final class MyGame extends JavaPlugin {
+    @Override 
+    public void onEnable() {
+        HikariAPI.connect("username_mysql", "password_mysql", "host_url", 3306, "database_name");
+        APIInitializer.init(this);
+    }
+}
+```
+
+And do not forget to close the pool:
+
+```java
+HikariAPI.disconnect();
 ```
 
 ### Event Handling
