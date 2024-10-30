@@ -33,6 +33,7 @@
         * [_Title_](#_title_)
         * [_Action Bar_](#_action-bar_)
     * [Command Tab Completer](#command-tab-completer)
+    * [Quest](#quest)
   * [Informations](#informations)
   * [License](#license)
 <!-- TOC -->
