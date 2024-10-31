@@ -1,30 +1,48 @@
 package fr.kiza.minecraftapi.init;
 
 import fr.kiza.minecraftapi.core.Core;
-import fr.kiza.minecraftapi.module.player.PlayerListener;
+import fr.kiza.minecraftapi.module.controller.event.APIListener;
+import fr.kiza.minecraftapi.module.controller.event.EventDispatcher;
 import fr.kiza.minecraftapi.module.tools.logger.Logger;
-
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
 public class APIInitializer {
-    public static void init(final JavaPlugin plugin) {
-        if(!plugin.getClass().isAnnotationPresent(MinecraftAPI.class)){
-            Logger.print("Please read the doc on the GitHub Repository.", Logger.LoggerLevel.ERROR);
-        }else{
-            Logger.print("API detected on " + plugin.getClass().getSimpleName(), Logger.LoggerLevel.INFO);
 
+    /**
+     * Initializes the API for the given plugin.
+     *
+     * @param plugin The instance of the JavaPlugin to initialize the API for.
+     */
+    public static void init(final JavaPlugin plugin) {
+        if (!plugin.getClass().isAnnotationPresent(MinecraftAPI.class)) {
+            plugin.getServer().getLogger().severe("Please read the doc on the GitHub Repository.");
+        } else {
             Core.init(plugin);
 
-            Arrays.stream(plugin.getClass().getDeclaredMethods())
-                    .filter(methods -> methods.isAnnotationPresent(PlayerListener.class))
-                    .forEach(_ -> {
-                        Core.getInstance().getEventDispatcher().registerEvent(plugin);
-                        plugin.getServer().getPluginManager().registerEvents(Core.getInstance().getEventDispatcher(), plugin);
-                    });
+            Logger.print("API detected on " + plugin.getClass().getSimpleName(), Logger.LoggerLevel.INFO);
 
-            Logger.print("API successfully initialized on " + plugin.getClass().getSimpleName(), Logger.LoggerLevel.INFO);
+            final Reflections reflections = new Reflections(plugin.getClass().getPackage().getName());
+            final Set<Class<?>> listenerClasses = reflections.getTypesAnnotatedWith(APIListener.class);
+
+            listenerClasses.forEach(listenerClass -> {
+                try {
+                    final Object listenerInstance = listenerClass.getDeclaredConstructor().newInstance();
+                    final EventDispatcher dispatcher = new EventDispatcher(listenerInstance);
+
+                    dispatcher.registerEvent(plugin);
+
+                    Logger.print("Listener registered successfully: " + listenerClass.getName(), Logger.LoggerLevel.DEBUG);
+                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                    plugin.getServer().getLogger().severe("Failed to register listener: " + listenerClass.getName());
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 }
