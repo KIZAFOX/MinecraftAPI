@@ -18,5 +18,10 @@ public enum PacketType {
     /**
      * A packet type for sending action bar messages to a player.
      */
-    ACTION_BAR
+    ACTION_BAR,
+
+    /**
+     * A packet type for getting player's IP Address.
+     */
+    IP_ADDRESS_PLAYER
 }
