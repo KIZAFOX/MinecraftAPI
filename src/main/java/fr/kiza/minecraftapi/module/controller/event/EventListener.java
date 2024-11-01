@@ -27,13 +27,12 @@ public class EventListener implements Listener {
      *
      * @param event The player login event.
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onLogin(final PlayerLoginEvent event) {
         final Player player = event.getPlayer();
         this.playerData = new PlayerData(player);
 
         playerData.inject();
-
         this.playerDataMap.put(player, playerData);
     }
 
@@ -43,7 +42,7 @@ public class EventListener implements Listener {
      *
      * @param event The player quit event.
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onLogout(final PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         final PlayerData playerData = playerDataMap.remove(player);
