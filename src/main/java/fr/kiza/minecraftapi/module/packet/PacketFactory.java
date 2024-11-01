@@ -2,6 +2,7 @@ package fr.kiza.minecraftapi.module.packet;
 
 import fr.kiza.minecraftapi.module.packet.handler.PacketBuilder;
 import fr.kiza.minecraftapi.module.packet.handler.types.ActionBarPacketHandler;
+import fr.kiza.minecraftapi.module.packet.handler.types.IpAddressPacketHandler;
 import fr.kiza.minecraftapi.module.packet.handler.types.MessagePacketHandler;
 import fr.kiza.minecraftapi.module.packet.handler.types.TitlePacketHandler;
 
@@ -20,6 +21,7 @@ public class PacketFactory {
         builders.put(PacketType.MESSAGE_PLAYER, new MessagePacketHandler());
         builders.put(PacketType.TITLE, new TitlePacketHandler());
         builders.put(PacketType.ACTION_BAR, new ActionBarPacketHandler());
+        builders.put(PacketType.IP_ADDRESS_PLAYER, new IpAddressPacketHandler());
     }
 
     /**
