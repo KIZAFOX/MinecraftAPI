@@ -2,6 +2,7 @@ package fr.kiza.minecraftapi.module.packet.handler;
 
 import fr.kiza.minecraftapi.module.exception.PacketException;
 import net.minecraft.network.protocol.Packet;
+import org.bukkit.entity.Player;
 
 /**
  * Interface for building custom packets.
@@ -68,6 +69,10 @@ public interface PacketBuilder<T> {
      */
     default PacketBuilder<T> fadeOut(int fadeOut) {
         return this; // Implementation can be added here.
+    }
+
+    default PacketBuilder<T> setPlayer(final Player player){
+        return this;
     }
 
     /**
