@@ -4,8 +4,6 @@ import fr.kiza.minecraftapi.core.Core;
 import fr.kiza.minecraftapi.module.controller.event.APIListener;
 import fr.kiza.minecraftapi.module.controller.event.EventDispatcher;
 import fr.kiza.minecraftapi.module.tools.logger.Logger;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
