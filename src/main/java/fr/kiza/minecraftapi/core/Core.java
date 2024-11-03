@@ -4,6 +4,7 @@ import fr.kiza.hikariapi.HikariAPI;
 import fr.kiza.minecraftapi.module.controller.event.EventListener;
 import fr.kiza.minecraftapi.module.controller.event.EventDispatcher;
 import fr.kiza.minecraftapi.module.database.Database;
+import fr.kiza.minecraftapi.module.gui.GuiListenerRegistry;
 import fr.kiza.minecraftapi.module.player.handler.PlayerHandler;
 import fr.kiza.minecraftapi.module.tools.color.ConsoleColor;
 
@@ -38,7 +39,8 @@ public abstract class Core {
 
     private final String[] STEP_MESSAGES = {
             "Setup database...", "Loading PlayerHandler...",
-            "Loading EventDispatcher...", "Registering Event Listeners..."
+            "Loading EventDispatcher...", "Registering Event Listeners...",
+            "Loading GuiHandler..."
     };
 
     /**
@@ -57,7 +59,7 @@ public abstract class Core {
     public static void unload(){
         HikariAPI.disconnect();
         instance = null;
-        fr.kiza.minecraftapi.module.tools.logger.Logger.print("API Database successfully disconnected from the core", fr.kiza.minecraftapi.module.tools.logger.Logger.LoggerLevel.INFO);
+        System.out.println("API Database successfully disconnected from the core");
     }
 
     /**
@@ -70,6 +72,7 @@ public abstract class Core {
         this.logger = plugin.getLogger();
         this.playerHandler = new PlayerHandler();
         this.eventDispatcher = new EventDispatcher(plugin);
+        GuiListenerRegistry.init(plugin);
     }
 
     /**
@@ -85,6 +88,7 @@ public abstract class Core {
         if (!initializeDatabase()) return;
 
         this.loadModules();
+
         logger.info(colored(API_SUCCESS_MESSAGE, ConsoleColor.GREEN));
         this.logExecutionTime(start);
         this.logLine();
@@ -115,6 +119,7 @@ public abstract class Core {
         this.logStepCompletion(3, ConsoleColor.PURPLE);
         this.registerListeners();
         this.logStepCompletion(4, ConsoleColor.YELLOW);
+        this.logStepCompletion(5, ConsoleColor.CYAN);
     }
 
     /**
